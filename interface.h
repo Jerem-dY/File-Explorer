@@ -70,6 +70,11 @@ struct FE_Widgets
 
 /*Prototypes de fonctions : */
 
+/**
+* Init all widgets to the NULL value
+*/
+void init_widgets_structure(struct FE_Widgets *fe_widgets);
+
 
 /**
 * Init the whole GUI
