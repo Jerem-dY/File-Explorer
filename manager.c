@@ -2,7 +2,8 @@
 
 
 
-void list_dir(void){
+void list_dir(struct FE_Widgets *fe_widgets){
+
 
     DIR *folder;
     struct dirent *file;
@@ -17,7 +18,7 @@ void list_dir(void){
         return;
     }
 
-    clear_list();
+    clear_list(fe_widgets);
 
 
     int x = 0;
@@ -26,7 +27,7 @@ void list_dir(void){
 
     while((file = readdir(folder))){
         if(strcmp(file->d_name, ".") && strcmp(file->d_name, ".."))
-            add_to_list(UTF8(file->d_name)); //Conversion en utf8 pour éviter les bugs d'affichage
+            add_to_list(fe_widgets, UTF8(file->d_name)); //Conversion en utf8 pour éviter les bugs d'affichage
 
             if(isDirExist(file->d_name)){
                 nbr_folders++;
@@ -42,8 +43,8 @@ void list_dir(void){
     char nbr[128];
     sprintf(nbr, "Elements : %d ; Files : %d ; Folders : %d", nbr_folders+nbr_files, nbr_files, nbr_folders);
 
-    gtk_entry_set_text(GTK_ENTRY(entry_path), cwd);
-    gtk_statusbar_push(GTK_STATUSBAR(statusbar), context_id, nbr);
+    gtk_entry_set_text(GTK_ENTRY(fe_widgets->entry_path), cwd);
+    gtk_statusbar_push(GTK_STATUSBAR(fe_widgets->statusbar), fe_widgets->context_id, nbr);
 
 
 

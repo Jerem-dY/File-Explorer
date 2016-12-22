@@ -21,41 +21,52 @@ enum{
 };
 
 
-/*Widgets : */
+struct FE_Widgets
+{
+    /*Main Window : */
+    GtkWidget *mainWindow;
+    GtkWidget *windowPanel;
+    GtkWidget *layout1; //list's layout
+    GtkWidget *layout2; //Control's layout
+    GtkWidget *layout3; //Additional control's layout
+    GtkWidget *fixed;
+    GtkWidget *paned;
 
-extern GtkWidget *mainWindow;
-extern GtkWidget *windowPanel;
-extern GtkWidget *layout1;
-extern GtkWidget *layout2;
-extern GtkWidget *layout3;
-extern GtkWidget *fixed;
-extern GtkWidget *paned;
+    /*List widget : */
+    GtkListStore *store;
+    GtkWidget *view;
+    GtkCellRenderer *renderer;
+    GtkTreeViewColumn *column;
+    GtkTreeViewColumn *column2;
+    GtkTreeViewColumn *column3;
+    GtkTreeSelection *selection;
 
-extern GtkListStore *store;
-extern GtkWidget *view;
-extern GtkCellRenderer *renderer;
-extern GtkTreeViewColumn *column;
-extern GtkTreeViewColumn *column2;
-extern GtkTreeViewColumn *column3;
-extern GtkWidget *scrolledWindow;
-extern GtkTreeSelection *selection;
+    GtkWidget *scrolledWindow;
 
-extern GtkWidget *btn_open;
-extern GtkWidget *btn_return;
-extern GtkWidget *entry_path;
-extern GtkWidget *btn_browse;
-extern GtkWidget *btn_delete;
-extern GtkWidget *btn_new;
 
-extern GtkWidget *new_entry;
-extern GtkWidget *new_create;
-extern GtkWidget *new_radio1;
-extern GtkWidget *new_radio2;
+    /*Control widgets : */
+    GtkWidget *btn_open;
+    GtkWidget *btn_return;
+    GtkWidget *entry_path;
+    GtkWidget *btn_browse;
+    GtkWidget *btn_delete;
+    GtkWidget *btn_new;
 
-extern GtkWidget *statusbar;
-extern guint context_id;
+    /*New file control widgets : */
+    GtkWidget *new_entry;
+    GtkWidget *new_create;
+    GtkWidget *new_radio1;
+    GtkWidget *new_radio2;
 
-extern GtkDialog *dialog_delete;
+
+    /*Others : */
+    GtkWidget *statusbar;
+    guint context_id;
+
+
+    /*Dialog windows : */
+    GtkDialog *dialog_delete;
+};
 
 /*Prototypes de fonctions : */
 
@@ -63,67 +74,67 @@ extern GtkDialog *dialog_delete;
 /**
 * Init the whole GUI
 */
-int init_gui(int *argc, char **argv[]);
+int init_gui(int *argc, char **argv[], struct FE_Widgets *fe_widgets);
 
 
 /**
 * Init the main window
 */
-void init_main_window(void);
+void init_main_window(struct FE_Widgets *fe_widgets);
 
 
 /**
 * Init the main layout for the main window (grid layout)
 */
-void init_main_layout(void);
+void init_main_layout(struct FE_Widgets *fe_widgets);
 
 
 /**
 * Init the second layout, which contains the controls widgets
 */
-void init_second_layout(void);
+void init_second_layout(struct FE_Widgets *fe_widgets);
 
 
 /**
 * Init the third layout
 */
-void init_third_layout(void);
+void init_third_layout(struct FE_Widgets *fe_widgets);
 
 
 /**
 * Init the paned layout
 */
-void init_paned(void);
+void init_paned(struct FE_Widgets *fe_widgets);
 
 
 /**
 * Init the list widget
 */
-void init_list(void);
+void init_list(struct FE_Widgets *fe_widgets);
 
 
 /**
 * Init the widgets that controls folders and files
 */
-void init_control_widgets(void);
+void init_control_widgets(struct FE_Widgets *fe_widgets);
 
 
 /**
 * Add the widget to the main window
 */
-void add_to_main_window(GtkWidget *widget);
+void add_to_main_window(struct FE_Widgets *fe_widgets, GtkWidget *widget);
 
 
 /**
 * Add to the list widget a row with a string (name)
 */
-void add_to_list(char *str);
+void add_to_list(struct FE_Widgets *fe_widgets, char *str);
 
 
 /**
 * Clear the list widget
 */
-void clear_list(void);
+void clear_list(struct FE_Widgets *fe_widgets);
 
 
 #endif // INTERFACE_H_INCLUDED

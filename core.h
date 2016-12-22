@@ -22,7 +22,7 @@
 /**
 * List the items of the current working directory
 */
-void list_dir(void);
+void list_dir(struct FE_Widgets *fe_widgets);
 
 
 /**
