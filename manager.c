@@ -67,6 +67,18 @@ _Bool isDirExist(char *path){
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+_Bool isDir(char *path){
+
+    struct stat s_buf;
+
+    if (stat(path, &s_buf))
+        return 0;
+
+    return S_ISDIR(s_buf.st_mode);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 int open_directory(char *path){
 
     if(!isDirExist(path)){
@@ -149,72 +161,26 @@ int copy_file(char const * const source, char const * const destination)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void remove_dir(char *path){
+int remove_dir(char *path){
 
-    DIR *folder;
-    struct dirent *file;
-    struct stat statistic;
-
-    folder = opendir(path);
-    puts(path);
-
-    while((file = readdir(folder))){
+    DIR*            dir;
+    struct dirent*  ep;
+    char            p_buf[512] = {0};
 
 
-    DIR *directory;
-    struct dirent *entry;
-    struct stat file_stat;
+    dir = opendir(path);
 
+    while ((ep = readdir(dir))) {
 
-    char buffer[1024] = {0};
-
-    /* On ouvre le dossier. */
-    directory = opendir(path);
-    if ( directory == NULL ) {
-        fprintf(stderr, "cannot open directory %s\n", path);
-        return;
+        sprintf(p_buf, "%s/%s", path, ep->d_name);
+        if (isDir(p_buf))
+            remove_dir(p_buf); //Problème de récursivité ici
+        else
+            unlink(p_buf);
     }
 
-    /* On boucle sur les entrées du dossier. */
-    while ( (entry = readdir(directory)) != NULL ) {
+    closedir(dir);
 
-        /* On "saute" les répertoires "." et "..". */
-        if ( strcmp(entry->d_name, ".") == 0 ||
-             strcmp(entry->d_name, "..") == 0 ) {
-            continue;
-        }
-
-        /* On construit le chemin d'accès du fichier en
-         * concaténant son nom avec le nom du dossier
-         * parent. On intercale "/" entre les deux.
-         * NB: '/' est aussi utilisable sous Windows
-         * comme séparateur de dossier. */
-        snprintf(buffer, 1024, "%s/%s", path, entry->d_name);
-
-        /* On récupère des infos sur le fichier. */
-        stat(buffer, &file_stat);
-        /* J'ai la flemme de tester la valeur de retour, mais
-         * dans un vrai programme il faudrait le faire :D */
-
-        if ( S_ISREG(file_stat.st_mode) ) {
-            /* On est sur un fichier, on le supprime. */
-            remove(buffer);
-        }
-        else if ( S_ISDIR(file_stat.st_mode) ) {
-            /* On est sur un dossier, on appelle cette fonction. */
-            remove_dir(buffer);
-        }
-    }
-
-    /* On ferme le dossier. */
-    closedir(directory);
-
-    /* Maintenant le dossier doit être vide, on le supprime. */
-    remove(path);
-    /* J'ai toujours la flemme de tester la valeur de retour... */
-
-    return;
-
-    }
+    return rmdir(path);
 }
 

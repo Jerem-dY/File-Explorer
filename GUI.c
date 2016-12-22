@@ -27,7 +27,7 @@ int init_gui(int *argc, char **argv[]){
     g_signal_connect(G_OBJECT(btn_open), "clicked", G_CALLBACK(open_selected), NULL);
     g_signal_connect(G_OBJECT(btn_return), "clicked", G_CALLBACK(open_back), NULL);
     g_signal_connect(G_OBJECT(btn_browse), "clicked", G_CALLBACK(browse), NULL);
-    g_signal_connect(G_OBJECT(btn_delete), "clicked", G_CALLBACK(delete), NULL);
+    g_signal_connect(G_OBJECT(btn_delete), "clicked", G_CALLBACK(rm), NULL);
     g_signal_connect(G_OBJECT(btn_new), "clicked", G_CALLBACK(new_click), NULL);
     g_signal_connect(G_OBJECT(new_create), "clicked", G_CALLBACK(new_create_click), NULL);
 

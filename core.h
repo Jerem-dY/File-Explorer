@@ -32,6 +32,12 @@ _Bool isDirExist(char *path);
 
 
 /**
+* Check if it's a directory
+*/
+_Bool isDir(char *path);
+
+
+/**
 * Open the given directory
 */
 int open_directory(char *path);
@@ -64,7 +70,7 @@ int copy_file(char const * const source, char const * const destination);
 /**
 * Remove a directory
 */
-void remove_dir(char *path);
+int remove_dir(char *path);
 
 
 #endif // CORE_H_INCLUDED

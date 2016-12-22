@@ -7,7 +7,7 @@
 void open_selected(GtkWidget *widget, gpointer data);
 void open_back(GtkWidget *widget, gpointer data);
 void browse(GtkWidget *widget, gpointer data);
-void delete(GtkWidget *widget, gpointer data);
+void rm(GtkWidget *widget, gpointer data);
 void new_click(GtkWidget *widget, gpointer data);
 void new_create_click(GtkWidget *widget, gpointer data);
 
